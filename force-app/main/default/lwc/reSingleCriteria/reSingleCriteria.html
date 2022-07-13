@@ -1,0 +1,47 @@
+<template>
+  <div class="slds-p-around_medium row">
+    <lightning-layout pull-to-boundary="small" vertical-align="end">
+      <lightning-layout-item padding="horizontal-small">
+        <lightning-input type="text" label="Criteria Name" value={criteriaName} required onblur={handleNameChange}></lightning-input>
+      </lightning-layout-item>
+      <lightning-layout-item padding="horizontal-small">
+        <lightning-combobox
+          name="fieldname"
+          label="Field Api Name"
+          value={fieldApiName}
+          options={fields}
+          required
+          onchange={handleFieldChange}
+        ></lightning-combobox>
+      </lightning-layout-item>
+      <lightning-layout-item padding="horizontal-small">
+        <lightning-combobox
+          name="comparison"
+          label="Comparison Type"
+          value={comparisonType}
+          placeholder="Comparison "
+          options={comparisons}
+          onchange={handleComparisonChange}
+          required
+        ></lightning-combobox>
+      </lightning-layout-item>
+      <lightning-layout-item padding="horizontal-small">
+        <lightning-combobox
+          name="progress"
+          label="Case Sensitive"
+          value={selectedCase}
+          placeholder="Case Sensitive"
+          options={caseSensitiveOptions}
+          onchange={handleCaseChange}
+          required
+        ></lightning-combobox>
+      </lightning-layout-item>
+      <lightning-layout-item padding="horizontal-small">
+        <lightning-input type="text" label="Value" value={criteriaValue} onchange={handleValueChange}></lightning-input>
+      </lightning-layout-item>
+      <lightning-layout-item padding="horizontal-small">
+        <lightning-button-icon icon-name="utility:delete" alternative-text="Delete" title="Delete" onclick={deleteHandler}></lightning-button-icon>
+      </lightning-layout-item>
+    </lightning-layout>
+  </div>
+</template>

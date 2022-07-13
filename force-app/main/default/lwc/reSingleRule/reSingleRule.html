@@ -1,0 +1,230 @@
+<!-- sldsValidatorIgnore -->
+<template>
+  <div class="slds-p-around_medium">
+    <!--Single Rule Layout-->
+    <template if:false={isNested}>
+      <lightning-layout multiple-rows>
+        <lightning-layout-item size="12">
+          <lightning-layout pull-to-boundary="small" vertical-align="end">
+            <lightning-layout-item padding="horizontal-small">
+              <lightning-input
+                type="number"
+                label="Order"
+                step="1"
+                value={ruleOrder}
+                required
+                onblur={handleOrderChange}
+              >
+              </lightning-input>
+            </lightning-layout-item>
+            <lightning-layout-item padding="horizontal-small">
+              <lightning-input
+                type="text"
+                label="Rule Name"
+                value={ruleName}
+                required
+                onblur={handleNameChange}
+              ></lightning-input>
+            </lightning-layout-item>
+            <lightning-layout-item padding="horizontal-small">
+              <lightning-combobox
+                name="rule type"
+                label="Rule Type"
+                value={ruleType}
+                placeholder="Rule Type"
+                options={ruleTypes}
+                onchange={handleRuleTypeChange}
+                required
+              ></lightning-combobox>
+            </lightning-layout-item>
+            <lightning-layout-item padding="horizontal-small">
+              <lightning-combobox
+                name="action"
+                label="Action"
+                value={action}
+                placeholder="Action"
+                options={actionOptions}
+                onchange={handleActionChange}
+                required
+              ></lightning-combobox>
+            </lightning-layout-item>
+            <lightning-layout-item padding="horizontal-small">
+              <lightning-input
+                type="text"
+                label="Action Value"
+                value={actionValue}
+                required
+                onchange={handleActionValueChange}
+              >
+              </lightning-input>
+            </lightning-layout-item>
+            <lightning-layout-item padding="horizontal-small">
+              <lightning-combobox
+                name="success"
+                label="On Success"
+                value={success}
+                placeholder="On Success"
+                options={successOptions}
+                onchange={handleSuccessChange}
+                required
+              ></lightning-combobox>
+            </lightning-layout-item>
+            <lightning-layout-item padding="horizontal-small">
+              <lightning-combobox
+                name="failure"
+                label="On Failure"
+                value={failure}
+                placeholder="On Failure"
+                options={failureOptions}
+                onchange={handleFailureChange}
+                required
+              ></lightning-combobox>
+            </lightning-layout-item>
+            <lightning-layout-item padding="horizontal-small">
+              <lightning-button-icon
+                icon-name="utility:delete"
+                alternative-text="Delete this rule"
+                title="Delete this rule"
+                onclick={deleteHandler}
+              ></lightning-button-icon>
+            </lightning-layout-item>
+            <template if:false={isDefault}>
+              <lightning-layout-item padding="horizontal-small">
+                <lightning-button-icon
+                  icon-name="utility:add"
+                  alternative-text="Add"
+                  title="Add new criteria"
+                  onclick={addCriteriaHandler}
+                ></lightning-button-icon>
+              </lightning-layout-item>
+            </template>
+          </lightning-layout>
+        </lightning-layout-item>
+        <lightning-layout-item size="12">
+          <div class="criterias">
+            <template if:false={isDefault}>
+              <template for:each={pvtCriterias} for:item="criteria">
+                <c-re-rule-criteria
+                  order={criteria.order}
+                  name={criteria.criteria}
+                  type={criteria.type}
+                  key={criteria.criteria}
+                  onedit={editCriteriaHandler}
+                  ondelete={deleteCriteriaHandler}
+                ></c-re-rule-criteria>
+              </template>
+            </template>
+          </div>
+        </lightning-layout-item>
+      </lightning-layout>
+    </template>
+
+    <!--Nested rule layout-->
+    <template if:true={isNested}>
+      <lightning-layout multiple-rows>
+        <!--Show main rule-->
+        <lightning-layout-item size="12">
+          <lightning-layout pull-to-boundary="small" vertical-align="end">
+            <lightning-layout-item padding="horizontal-small">
+              <lightning-input
+                type="number"
+                label="Order"
+                step="1"
+                value={ruleOrder}
+                required
+                onchange={handleOrderChange}
+              >
+              </lightning-input>
+            </lightning-layout-item>
+            <lightning-layout-item padding="horizontal-small">
+              <lightning-input
+                type="text"
+                label="Rule Name"
+                value={ruleName}
+                required
+                onblur={handleNameChange}
+              ></lightning-input>
+            </lightning-layout-item>
+            <lightning-layout-item padding="horizontal-small">
+              <lightning-combobox
+                name="rule type"
+                label="Rule Type"
+                value={ruleType}
+                placeholder="Rule Type"
+                options={ruleTypes}
+                onchange={handleRuleTypeChange}
+                required
+              ></lightning-combobox>
+            </lightning-layout-item>
+            <lightning-layout-item padding="horizontal-small">
+              <lightning-combobox
+                name="success"
+                label="On Success"
+                value={success}
+                placeholder="On Success"
+                options={successOptions}
+                onchange={handleSuccessChange}
+                required
+              ></lightning-combobox>
+            </lightning-layout-item>
+            <lightning-layout-item padding="horizontal-small">
+              <lightning-combobox
+                name="failure"
+                label="On Failure"
+                value={failure}
+                placeholder="On Failure"
+                options={failureOptions}
+                onchange={handleFailureChange}
+                required
+              ></lightning-combobox>
+            </lightning-layout-item>
+            <lightning-layout-item padding="horizontal-small">
+              <lightning-button-icon
+                icon-name="utility:delete"
+                alternative-text="Delete"
+                title="Delete"
+                onclick={deleteHandler}
+              ></lightning-button-icon>
+            </lightning-layout-item>
+            <lightning-layout-item padding="horizontal-small">
+              <lightning-button-icon
+                icon-name="utility:add"
+                alternative-text="Add"
+                title="Add new criteria"
+                onclick={addCriteriaHandler}
+              ></lightning-button-icon>
+            </lightning-layout-item>
+          </lightning-layout>
+        </lightning-layout-item>
+
+        <lightning-layout-item size="12">
+          <div class="criterias">
+            <template for:each={pvtCriterias} for:item="criteria">
+              <c-re-rule-criteria
+                order={criteria.order}
+                name={criteria.criteria}
+                type={criteria.type}
+                key={criteria.criteria}
+                onedit={editCriteriaHandler}
+                ondelete={deleteCriteriaHandler}
+              ></c-re-rule-criteria>
+            </template>
+          </div>
+        </lightning-layout-item>
+        <!--Show nested rules-->
+        <lightning-layout-item size="12">
+          <div
+            class="slds-var-p-left_large slds-var-p-around_medium slds-var-m-top_xx-large rules"
+          >
+            <c-re-rules
+              rules={pvtRulesMap}
+              onnewnested={nestedRuleAddHandler}
+              onnestedruledelete={nestedRuleDeletedHandler}
+              onnestedrulechange={nestedRuleChangeHandler}
+            ></c-re-rules>
+          </div>
+        </lightning-layout-item>
+      </lightning-layout>
+    </template>
+  </div>
+</template>

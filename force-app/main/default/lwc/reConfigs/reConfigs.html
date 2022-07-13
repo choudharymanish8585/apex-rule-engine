@@ -1,0 +1,21 @@
+<template>
+  <template if:true={showComponent}>
+    <div class="config-list">
+      <lightning-vertical-navigation
+        selected-item={activeConfig}
+        onselect={configClickHandler}
+      >
+        <template for:each={configs} for:item="config">
+          <lightning-vertical-navigation-item
+            key={config.Id}
+            label={config.Name}
+            name={config.Id}
+          ></lightning-vertical-navigation-item>
+        </template>
+      </lightning-vertical-navigation>
+    </div>
+  </template>
+  <template if:false={showComponent}>
+    <div class="nodata-panel">Create a new config</div>
+  </template>
+</template>

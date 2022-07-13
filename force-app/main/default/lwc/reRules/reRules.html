@@ -1,0 +1,59 @@
+<template>
+  <div class="slds-var-m-top_medium">
+    <lightning-layout multiple-rows>
+      <lightning-layout-item size="12">
+        <lightning-layout horizontal-align="spread" vertical-align="end">
+          <lightning-layout-item size="6">
+            <template if:true={hasParams}>
+              <lightning-input
+                label="Entry Param(s)"
+                type="text"
+                placeholder="Comma Separated Param List"
+                value={appliesTo}
+                onblur={paramsChangeHandler}
+                class="params"
+              ></lightning-input>
+            </template>
+          </lightning-layout-item>
+          <lightning-layout-item>
+            <lightning-button
+              label="Add New Rule"
+              variant="success"
+              icon-name="utility:add"
+              onclick={addNewRuleHandler}
+            ></lightning-button>
+          </lightning-layout-item>
+          <template if:true={showDelete}>
+            <lightning-layout-item>
+              <lightning-button
+                label="Delete This Rule Set"
+                variant="destructive"
+                icon-name="utility:delete"
+                onclick={deleteRuleSetHandler}
+              ></lightning-button>
+            </lightning-layout-item>
+          </template>
+        </lightning-layout>
+      </lightning-layout-item>
+
+      <lightning-layout-item size="12">
+        <template for:each={allRules} for:item="rule">
+          <c-re-single-rule
+            rule-name={rule.name}
+            rule-type={rule.type}
+            action={rule.action}
+            action-value={rule.actionValue}
+            rule-order={rule.order}
+            success={rule.success}
+            failure={rule.fail}
+            rules={rule.rules}
+            criterias={rule.criterias}
+            key={rule.name}
+            ondelete={ruleDeleteHandler}
+            onedit={ruleChangeHandler}
+          ></c-re-single-rule>
+        </template>
+      </lightning-layout-item>
+    </lightning-layout>
+  </div>
+</template>

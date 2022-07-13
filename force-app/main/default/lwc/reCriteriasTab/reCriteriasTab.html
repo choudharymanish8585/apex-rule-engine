@@ -1,0 +1,44 @@
+<template>
+  <lightning-card>
+    <lightning-layout horizontal-align="start" class="slds-m-vertical_medium">
+      <lightning-layout-item padding="horizontal-small">
+        <span class="slds-text-body_small">Select an object to populate fields</span>
+      </lightning-layout-item>
+      <lightning-layout-item padding="horizontal-small">
+        <lightning-combobox
+          name="objects"
+          label="Object"
+          variant="label-hidden"
+          value={selectedObject}
+          placeholder="Select Object"
+          options={objects}
+          onchange={handleObjectChange}
+        ></lightning-combobox>
+      </lightning-layout-item>
+    </lightning-layout>
+    <template for:each={allCriterias} for:item="criteria">
+      <c-re-single-criteria
+        criteria-value={criteria.value}
+        criteria-name={criteria.name}
+        field-api-name={criteria.field}
+        comparison-type={criteria.comparison}
+        case-sensitive={criteria.considerCase}
+        selected-object={selectedObject}
+        key={criteria.name}
+        onedit={criteriaChangeHandler}
+        ondelete={criteriaDeleteHandler}
+      ></c-re-single-criteria>
+    </template>
+
+    <template if:true={isEdited}>
+      <lightning-layout horizontal-align="center" class="slds-m-top_large">
+        <lightning-layout-item padding="horizontal-small">
+          <lightning-button label="Cancel" onclick={cancelClickHandler}></lightning-button>
+        </lightning-layout-item>
+        <lightning-layout-item padding="horizontal-small">
+          <lightning-button label="Save" variant="brand" disabled={saveDisabled} onclick={saveClickHandler}></lightning-button>
+        </lightning-layout-item>
+      </lightning-layout>
+    </template>
+  </lightning-card>
+</template>

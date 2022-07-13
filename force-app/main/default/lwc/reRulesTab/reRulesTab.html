@@ -1,0 +1,47 @@
+<template>
+  <lightning-card>
+    <div class="slds-var-m-top_medium">
+      <lightning-accordion allow-multiple-sections-open>
+        <template iterator:rs={allRuleSets}>
+          <div class="ruleset" key={rs.value.ruleset.id}>
+            <lightning-accordion-section
+              name={rs.value.ruleset.appliedTo}
+              label={rs.value.ruleset.appliedTo}
+            >
+              <c-re-rules
+                params={rs.value.ruleset.appliedTo}
+                rules={rs.value.rules}
+                rule-set-id={rs.value.ruleset.id}
+                onnew={addNewRuleHandler}
+                ondelete={deleteRuleHandler}
+                onparamschange={paramsChangeHandler}
+                onrulechange={ruleChangeHandler}
+                onrulesetdelete={deleteRulesetHandler}
+              ></c-re-rules>
+              <div class="divider"></div>
+            </lightning-accordion-section>
+          </div>
+        </template>
+      </lightning-accordion>
+    </div>
+
+    <template if:true={isEdited}>
+      <lightning-layout horizontal-align="center" class="slds-var-m-top_large">
+        <lightning-layout-item padding="horizontal-small">
+          <lightning-button
+            label="Cancel"
+            onclick={cancelClickHandler}
+          ></lightning-button>
+        </lightning-layout-item>
+        <lightning-layout-item padding="horizontal-small">
+          <lightning-button
+            label="Save"
+            variant="brand"
+            disabled={saveDisabled}
+            onclick={saveClickHandler}
+          ></lightning-button>
+        </lightning-layout-item>
+      </lightning-layout>
+    </template>
+  </lightning-card>
+</template>

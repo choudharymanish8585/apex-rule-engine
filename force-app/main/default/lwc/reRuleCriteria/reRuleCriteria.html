@@ -1,0 +1,24 @@
+<!-- sldsValidatorIgnore -->
+<template>
+  <lightning-layout pull-to-boundary="small" vertical-align="end">
+    <lightning-layout-item padding="horizontal-small">
+      <lightning-input type="number" label="Order" step="1" value={order} required onblur={handleOrderChange}> </lightning-input>
+    </lightning-layout-item>
+    <lightning-layout-item padding="horizontal-small">
+      <lightning-combobox name="criterias" label="Criteria Name" value={name} options={criterias} required onchange={handleNameChange}></lightning-combobox>
+    </lightning-layout-item>
+    <lightning-layout-item padding="horizontal-small">
+      <lightning-combobox
+        name="criteria type"
+        label="Criteria Type"
+        value={type}
+        placeholder="Criteria Type"
+        options={criteriaType}
+        onchange={handleTypeChange}
+      ></lightning-combobox>
+    </lightning-layout-item>
+    <lightning-layout-item padding="horizontal-small">
+      <lightning-button-icon icon-name="utility:delete" alternative-text="Delete" title="Delete" onclick={deleteHandler}></lightning-button-icon>
+    </lightning-layout-item>
+  </lightning-layout>
+</template>

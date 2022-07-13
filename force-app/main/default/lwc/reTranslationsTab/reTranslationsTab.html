@@ -1,0 +1,42 @@
+<template>
+  <lightning-card>
+    <!--translate ruleset based on params-->
+    <lightning-layout horizontal-align="spread" vertical-align="center">
+      <lightning-layout-item padding="horizontal-medium">
+        <div class="slds-text-heading_small">
+          <span>Translate Rules</span>
+        </div>
+      </lightning-layout-item>
+      <lightning-layout-item>
+        <lightning-layout horizontal-align="end" vertical-align="end">
+          <lightning-layout-item padding="horizontal-medium">
+            <lightning-combobox
+              name="params"
+              label="Entry Parameters"
+              value={param}
+              placeholder="Select a param"
+              options={params}
+              onchange={paramChangeHandler}
+              required
+            ></lightning-combobox>
+          </lightning-layout-item>
+          <lightning-layout-item padding="horizontal-medium">
+            <lightning-button
+              label="Translate"
+              variant="brand"
+              title="Translate"
+              onclick={translateHandler}
+            ></lightning-button>
+          </lightning-layout-item>
+        </lightning-layout>
+      </lightning-layout-item>
+    </lightning-layout>
+    <lightning-layout class="slds-var-m-top_xx-large">
+      <lightning-layout-item padding="horizontal-medium">
+        <lightning-formatted-rich-text
+          value={translations}
+        ></lightning-formatted-rich-text>
+      </lightning-layout-item>
+    </lightning-layout>
+  </lightning-card>
+</template>

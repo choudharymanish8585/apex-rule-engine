@@ -1,0 +1,125 @@
+<template>
+  <div class="container">
+    <lightning-layout>
+      <lightning-layout-item
+        size="3"
+        small-device-size="12"
+        medium-device-size="4"
+        large-device-size="3"
+        padding="around-small"
+      >
+        <lightning-card
+          title="Rules"
+          icon-name="standard:maintenance_work_rule"
+        >
+          <lightning-button
+            slot="actions"
+            label="New"
+            variant="brand"
+            onclick={addNewConfigHandler}
+          ></lightning-button>
+          <c-re-configs onconfigclick={configClickHandler}></c-re-configs>
+          <lightning-button
+            slot="footer"
+            variant="base"
+            label="Refresh"
+            title="Refresh"
+            onclick={refreshConfigList}
+            icon-position="left"
+            icon-name="utility:refresh"
+          ></lightning-button>
+        </lightning-card>
+      </lightning-layout-item>
+
+      <lightning-layout-item
+        size="9"
+        small-device-size="12"
+        medium-device-size="8"
+        large-device-size="9"
+        padding="around-small"
+      >
+        <lightning-card title="Workspace" icon-name="standard:bundle_config">
+          <div slot="actions">
+            <template if:true={isRulesTabActive}>
+              <lightning-button
+                label="Add Rules Set"
+                slot="actions"
+                variant="brand"
+                icon-name="utility:filter_criteria_rule"
+                onclick={handleNewRuleSet}
+              ></lightning-button>
+            </template>
+            <template if:true={isCriteriasTabActive}>
+              <lightning-button
+                label="Add Criteria"
+                slot="actions"
+                variant="brand"
+                icon-name="utility:filter_criteria"
+                onclick={addNewCriteriaHandler}
+              ></lightning-button>
+            </template>
+          </div>
+          <template if:true={showComponent}>
+            <lightning-tabset variant="scoped">
+              <!--RULES TABS-->
+              <lightning-tab
+                label="Rules"
+                value="rules"
+                onactive={tabActiveHandler}
+              >
+                <div class="tab">
+                  <c-re-rules-tab
+                    rule-sets={ruleSetMap}
+                    is-edited={ruleSetEdited}
+                    save-disabled={ruleSetSaveDisabled}
+                    onnew={handleNewRuleSet}
+                    ondelete={handleDeleteRuleSet}
+                    onnewrule={addNewRuleHandler}
+                    onparamschange={paramsChangeHandler}
+                    onrulechange={ruleChangeHandler}
+                    onruledelete={ruleDeleteHandler}
+                    oncancel={cancelRuleSetHandler}
+                    onsave={saveRuleSetHandler}
+                  ></c-re-rules-tab>
+                </div>
+              </lightning-tab>
+              <!--CRITERIAS TAB-->
+              <lightning-tab
+                label="Criterias"
+                value="criterias"
+                onactive={tabActiveHandler}
+              >
+                <div class="tab">
+                  <c-re-criterias-tab
+                    criterias={criteriaMap}
+                    is-edited={criteriaEdited}
+                    save-disabled={criteriaSaveDisabled}
+                    onnew={addNewCriteriaHandler}
+                    ondelete={deleteCriteriaHandler}
+                    onedit={changeCriteriaHandler}
+                    oncancel={cancelClickHandler}
+                    onsave={saveCriteriasHandler}
+                  ></c-re-criterias-tab>
+                </div>
+              </lightning-tab>
+              <lightning-tab
+                label="Translations"
+                value="translations"
+                onactive={tabActiveHandler}
+              >
+                <c-re-translations-tab
+                  current-config-id={currentConfigId}
+                ></c-re-translations-tab>
+              </lightning-tab>
+            </lightning-tabset>
+          </template>
+          <template if:false={showComponent}>
+            <div class="nodata-panel">
+              Please select a config to open editor.
+            </div>
+          </template>
+        </lightning-card>
+      </lightning-layout-item>
+    </lightning-layout>
+  </div>
+</template>
